@@ -1,11 +1,24 @@
+import { Metadata } from 'next';
+
 type TProps = {
-	params: {
+	params: Promise<{
 		type: string;
 		id: string;
-	};
+	}>;
 };
 
-export default function MovieDetailsPage({ params: { type, id } }: TProps) {
+export async function generateMetadata(
+	{ params }: TProps,
+	// parent: ResolvingMetadata,
+): Promise<Metadata> {
+	const { id, type } = await params;
+	return {
+		title: `${type.toUpperCase()} ID: ${id}`,
+	};
+}
+
+export default async function MovieDetailsPage({ params }: TProps) {
+	const { type, id } = await params;
 	return (
 		<div>
 			details of {type} #{id}

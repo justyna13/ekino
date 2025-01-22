@@ -1,13 +1,26 @@
+import { Metadata } from 'next';
+
 type TProps = {
-	params: {
+	params: Promise<{
 		slug?: string[];
-	};
+	}>;
 };
 
-export default function SearchPage({ params }: TProps) {
+export async function generateMetadata(
+	{ params }: TProps,
+	// parent: ResolvingMetadata,
+): Promise<Metadata> {
+	const { slug } = await params;
+	return {
+		title: !slug ? 'Szukaj' : `Szukaj ${slug}`,
+	};
+}
+
+export default async function SearchPage({ params }: TProps) {
+	const { slug } = await params;
 	return (
 		<article>
-			<section>{params && params.slug?.toString()}</section>
+			<section>{slug?.toString()}</section>
 		</article>
 	);
 }

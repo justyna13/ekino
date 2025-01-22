@@ -1,3 +1,7 @@
+export const metadata = {
+	title: 'Moje konto',
+};
+
 export default function MyAccountPage() {
 	return (
 		<article>

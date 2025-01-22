@@ -8,8 +8,12 @@ import { cn } from '@/utils/lib/tailwind';
 import Header from '@/components/layout/header';
 
 export const metadata: Metadata = {
-	title: 'Ekino app',
-	description: 'Ekino app to search and rate movies',
+	title: {
+		absolute: 'E-kino',
+		template: '%s | E-kino',
+	},
+	description: 'Ekino app to search, rate and buy movies',
+	keywords: ['wypożyczalnia filmów', 'wypożyczalnia seriali', 'vod'],
 };
 
 const fontSans = FontSans({
