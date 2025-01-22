@@ -1,3 +1,4 @@
-export default function Home() {
-	return <div>hello</div>;
+export default function HomePage() {
+	return <div className="bg-white">
+	</div>;
 }
