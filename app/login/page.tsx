@@ -3,5 +3,5 @@ export default function LoginPage() {
 		<article>
 			<section>Logowanie</section>
 		</article>
-	)
+	);
 }

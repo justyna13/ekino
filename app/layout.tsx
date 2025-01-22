@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 
 import './globals.css';
-import { cn } from '@/utils/lib/tailwind';
+
 import { Inter as FontSans } from 'next/font/google';
+import { cn } from '@/utils/lib/tailwind';
+
 import Header from '@/components/layout/header';
 
 export const metadata: Metadata = {
@@ -11,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 const fontSans = FontSans({
-	subsets: ["latin"],
-	variable: "--font-sans"
+	subsets: ['latin'],
+	variable: '--font-sans',
 });
 
 export default function RootLayout({
@@ -22,12 +24,14 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={cn(
-				'min-h-screen bg-foreground font-sans antialiased',
-				fontSans
-			)}>
-			<Header />
-			<main>{children}</main>
+			<body
+				className={cn(
+					'min-h-screen bg-foreground font-sans antialiased',
+					fontSans.variable,
+				)}
+			>
+				<Header />
+				<main>{children}</main>
 			</body>
 		</html>
 	);

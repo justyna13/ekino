@@ -3,5 +3,5 @@ export default function SignUpPage() {
 		<article>
 			<section>Rejestacja</section>
 		</article>
-	)
+	);
 }

@@ -1,13 +1,13 @@
 type TProps = {
 	params: {
 		slug?: string[];
-	}
-}
+	};
+};
 
-export default function SearchPage({params}: TProps) {
+export default function SearchPage({ params }: TProps) {
 	return (
 		<article>
-			<section>{params && params.slug?.toString() }</section>
+			<section>{params && params.slug?.toString()}</section>
 		</article>
-	)
+	);
 }
