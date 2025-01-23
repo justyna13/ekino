@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 type TProps = {
 	params: Promise<{
@@ -18,6 +19,11 @@ export async function generateMetadata(
 
 export default async function SearchPage({ params }: TProps) {
 	const { slug } = await params;
+
+	if (slug !== undefined && slug.length > 1) {
+		redirect('/');
+	}
+
 	return (
 		<article>
 			<section>{slug?.toString()}</section>

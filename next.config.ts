@@ -10,6 +10,26 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	async redirects() {
+		return [
+			{
+				source: '/movies',
+				destination: '/search',
+				permanent: false,
+			},
+			{
+				source: '/movies/:type',
+				destination: '/search',
+				permanent: false,
+			},
+			// przekierowanie całej ścieżki
+			// {
+			// 	source: '/search/:slug',
+			// 	destination: '/',
+			// 	permanent: false
+			// },
+		];
+	},
 };
 
 export default nextConfig;

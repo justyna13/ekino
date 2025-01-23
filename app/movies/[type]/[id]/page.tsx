@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 type TProps = {
 	params: Promise<{
@@ -19,6 +20,11 @@ export async function generateMetadata(
 
 export default async function MovieDetailsPage({ params }: TProps) {
 	const { type, id } = await params;
+
+	if (type !== 'movies' && type !== 'series') {
+		redirect('/search');
+	}
+
 	return (
 		<div>
 			details of {type} #{id}
