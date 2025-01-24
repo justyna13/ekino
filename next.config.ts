@@ -1,4 +1,13 @@
 import type { NextConfig } from 'next';
+import nextMDX from '@next/mdx';
+
+const withMDX = nextMDX({
+	extension: /\.mdx$/,
+	options: {
+		remarkPlugins: [],
+		rehypePlugins: [],
+	},
+});
 
 const nextConfig: NextConfig = {
 	images: {
@@ -9,6 +18,10 @@ const nextConfig: NextConfig = {
 				pathname: '/photos/**',
 			},
 		],
+	},
+	pageExtensions: ['mdx', 'ts', 'tsx'],
+	experimental: {
+		mdxRs: true,
 	},
 	async redirects() {
 		return [
@@ -32,4 +45,4 @@ const nextConfig: NextConfig = {
 	},
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);
