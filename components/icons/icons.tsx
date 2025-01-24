@@ -1,4 +1,9 @@
-import { BookOpenIcon, MenuIcon } from 'lucide-react';
+import {
+	BookOpenIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
+	MenuIcon,
+} from 'lucide-react';
 
 import Camera from '@/components/icons/camera';
 import Home from '@/components/icons/home';
@@ -10,4 +15,6 @@ export const Icons = {
 	bookOpen: BookOpenIcon,
 	menu: MenuIcon,
 	triangleDown: TriangleDown,
+	chevronLeft: ChevronLeftIcon,
+	chevronRight: ChevronRightIcon,
 };
