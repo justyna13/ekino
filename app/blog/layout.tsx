@@ -21,7 +21,7 @@ export default function BlogLayout({ children }: TProps) {
 						<Link href="/">Blog główna</Link>
 					</li>
 					<li>
-						<Link href="/blog/aio-review">Aio's review</Link>
+						<Link href="/blog/aio-review">AIOs review</Link>
 					</li>
 					<li>
 						<Link href="/blog/coffee-pros-and-cons">
