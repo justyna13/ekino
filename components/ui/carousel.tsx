@@ -6,7 +6,6 @@ import { cn } from '@/utils/lib/tailwind';
 import useEmblaCarousel, {
 	type UseEmblaCarouselType,
 } from 'embla-carousel-react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons/icons';
@@ -219,7 +218,7 @@ const CarouselPrevious = React.forwardRef<
 			onClick={scrollPrev}
 			{...props}
 		>
-			<Icons.chevronLeft className="h-4 w-4" />
+			<Icons.chevronLeft className="size-6" />
 			<span className="sr-only">Previous slide</span>
 		</Button>
 	);
@@ -248,7 +247,7 @@ const CarouselNext = React.forwardRef<
 			onClick={scrollNext}
 			{...props}
 		>
-			<Icons.chevronRight className="h-4 w-4" />
+			<Icons.chevronRight className="size-6" />
 			<span className="sr-only">Next slide</span>
 		</Button>
 	);
@@ -256,14 +255,14 @@ const CarouselNext = React.forwardRef<
 CarouselNext.displayName = 'CarouselNext';
 
 type TDotButton = {
-	children: ReactNode;
+	children?: ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const DotButton = ({ children, ...props }: TDotButton) => {
 	return (
 		<button
-			className={cn('size-3 rounded-full', props.className)}
 			{...props}
+			className={cn('size-3 rounded-full', props.className)}
 		>
 			{children}
 		</button>
@@ -277,4 +276,5 @@ export {
 	CarouselItem,
 	CarouselPrevious,
 	CarouselNext,
+	useCarousel,
 };

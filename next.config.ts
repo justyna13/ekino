@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
 				hostname: 'images.pexels.com',
 				pathname: '/photos/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'image.tmdb.org',
+				pathname: '/t/p/**',
+			},
 		],
 	},
 	pageExtensions: ['mdx', 'ts', 'tsx'],
