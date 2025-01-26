@@ -31,12 +31,12 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{
-				source: '/movies',
+				source: '/movies-and-tv',
 				destination: '/search',
 				permanent: false,
 			},
 			{
-				source: '/movies/:type',
+				source: '/movies-and-tv/:type',
 				destination: '/search',
 				permanent: false,
 			},

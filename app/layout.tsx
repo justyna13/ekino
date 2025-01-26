@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 		absolute: 'E-kino',
 		template: '%s | E-kino',
 	},
-	description: 'Ekino app to search, rate and buy movies',
+	description: 'Ekino app to search, rate and buy movies-and-tv',
 	keywords: ['wypożyczalnia filmów', 'wypożyczalnia seriali', 'vod'],
 };
 

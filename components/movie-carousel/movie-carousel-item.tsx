@@ -51,7 +51,7 @@ export default function MovieCarouselItem({
 						/>
 					</div>
 					<div className="mr-3 text-center lg:mt-20">
-						<Link href={`movies/movies/${id}`}>
+						<Link href={`movies-and-tv/movies/${id}`}>
 							<Button
 								variant={'outline'}
 								className="bg-transparent text-white"

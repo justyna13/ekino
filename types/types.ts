@@ -5,3 +5,5 @@ export type THTTPMethod =
 	| 'PUT'
 	| 'PATCH'
 	| 'DELETE';
+
+export type TMediaTypes = 'movie' | 'tv';
