@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/utils/lib/tailwind';
-import { typeToLabel } from '@/utils/translations';
+import { typeToLabel, typeToLink } from '@/utils/translations';
 
 import { TMediaTypes } from '@/types/types';
 import { TMDBImage500Url } from '@/config/tmdb-config';
@@ -34,6 +34,7 @@ export default function MediaItem({
 	className,
 }: TProps) {
 	const textType = typeToLabel(type);
+	const linkType = typeToLink(type);
 
 	return (
 		<div
@@ -67,7 +68,7 @@ export default function MediaItem({
 					)}
 				</div>
 				<div className="my-5 text-center">
-					<Link href={`/movies-and-tv/${type}/${id}`}>
+					<Link href={`/movies-and-tv/${linkType}/${id}`}>
 						<Button
 							variant={'outline'}
 							className="w-full bg-transparent text-white"

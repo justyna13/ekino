@@ -26,7 +26,13 @@ export async function api<TRes, TReq>(
 			headers,
 			...options,
 		});
-		return await response.json();
+		const data = await response.json();
+
+		if ('status_message' in data) {
+			throw new Error(data.status_message);
+		}
+
+		return data;
 	} catch (error) {
 		console.log(error);
 		return null;

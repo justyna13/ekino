@@ -6,3 +6,4 @@ export const TMDBHeaders = {
 
 export const TMDBImageOriginalUrl = 'https://image.tmdb.org/t/p/original';
 export const TMDBImage500Url = 'https://image.tmdb.org/t/p/w500';
+export const TMDBImage200Url = 'https://image.tmdb.org/t/p/w200';
