@@ -1,13 +1,21 @@
 import { api } from '@/server/helpers/api-helpers';
 
 import {
+	TCountry,
+	TDiscoverTMDBMovieReq,
+	TDiscoverTMDBTVReq,
+	TGenre,
+	TGenres,
 	TMovieTMDB,
 	TMovieTMDBDetailsWithCredits,
 	TResTMDB,
+	TSearchTMDBMovieReq,
+	TSearchTMDBTVSeriesReq,
 	TTMDBImages,
 	TTMDBTVShowDetailsWithCredits,
 	TTVShowTMDB,
 } from '@/types/tmdb-types';
+import { TMediaFilterSearchParams } from '@/types/types';
 import { TMDBAPIUrl, TMDBHeaders } from '@/config/tmdb-config';
 
 const TMCBService = {
@@ -131,6 +139,170 @@ const TMCBService = {
 				},
 			},
 		});
+	},
+	// https://developer.themoviedb.org/reference/search-movie
+	async searchMovie(query: string) {
+		return await api<TResTMDB<TMovieTMDB[]>, TSearchTMDBMovieReq>(
+			`${TMDBAPIUrl}/search/movie`,
+			{
+				headers: TMDBHeaders,
+				params: {
+					query,
+					language: 'pl',
+				},
+				options: {
+					next: {
+						revalidate: 3600 * 24 * 7,
+					},
+				},
+			},
+		);
+	},
+	// https://developer.themoviedb.org/reference/search-tv
+	async searchTv(query: string) {
+		return await api<TResTMDB<TTVShowTMDB[]>, TSearchTMDBTVSeriesReq>(
+			`${TMDBAPIUrl}/search/tv`,
+			{
+				headers: TMDBHeaders,
+				params: {
+					query,
+					language: 'pl',
+				},
+				options: {
+					next: {
+						revalidate: 3600 * 24 * 7,
+					},
+				},
+			},
+		);
+	},
+	// https://developer.themoviedb.org/reference/discover/movie
+	async discoverMovie(year?: number, genreId?: string, country?: string) {
+		const params: Record<string, string | undefined> = {
+			language: 'pl',
+			primary_release_year: year ? year.toString() : undefined,
+			with_genres: genreId,
+			with_origin_country: country,
+		};
+
+		// Filter out undefined values
+		const filteredParams = Object.fromEntries(
+			Object.entries(params).filter(([_, value]) => value !== undefined),
+		);
+
+		return await api<TResTMDB<TMovieTMDB[]>, TDiscoverTMDBMovieReq>(
+			`${TMDBAPIUrl}/discover/movie`,
+			{
+				headers: TMDBHeaders,
+				params: filteredParams,
+				options: {
+					next: {
+						revalidate: 3600 * 24 * 7,
+					},
+				},
+			},
+		);
+	},
+	// https://developer.themoviedb.org/reference/discover/tv
+	async discoverTV(year?: number, genreId?: string, country?: string) {
+		const params: Record<string, string | undefined> = {
+			language: 'pl',
+			first_air_year: year ? year.toString() : undefined,
+			with_genres: genreId,
+			with_origin_country: country,
+		};
+
+		// Filter out undefined values
+		const filteredParams = Object.fromEntries(
+			Object.entries(params).filter(([_, value]) => value !== undefined),
+		);
+
+		return await api<TResTMDB<TTVShowTMDB[]>, TDiscoverTMDBTVReq>(
+			`${TMDBAPIUrl}/discover/movie`,
+			{
+				headers: TMDBHeaders,
+				params: filteredParams,
+				options: {
+					next: {
+						revalidate: 3600 * 24 * 7,
+					},
+				},
+			},
+		);
+	},
+	// https://developer.themoviedb.org/reference/genre-movie-list
+	async getMovieGenres() {
+		return await api<TGenres, { language: string }>(
+			`${TMDBAPIUrl}/genre/movie/list`,
+			{
+				headers: TMDBHeaders,
+				params: {
+					language: 'pl',
+				},
+				options: {
+					next: {
+						revalidate: 3600 * 24 * 30,
+					},
+				},
+			},
+		);
+	},
+	// https://developer.themoviedb.org/reference/genre-tv-list
+	async getTvGenres() {
+		return await api<TGenres, { language: string }>(
+			`${TMDBAPIUrl}/genre/tv/list`,
+			{
+				headers: TMDBHeaders,
+				params: {
+					language: 'pl',
+				},
+				options: {
+					next: {
+						revalidate: 3600 * 24 * 30,
+					},
+				},
+			},
+		);
+	},
+	// https://developer.themoviedb.org/reference/configuration-countries
+	async getCountries() {
+		return await api<TCountry[], { language: string }>(
+			`${TMDBAPIUrl}/configuration/countries`,
+			{
+				headers: TMDBHeaders,
+				params: {
+					language: 'pl',
+				},
+				options: {
+					next: {
+						revalidate: 3600 * 24 * 30,
+					},
+				},
+			},
+		);
+	},
+	async filterMedia(slug?: string, searchParams?: TMediaFilterSearchParams) {
+		const type = searchParams?.type || 'movie';
+
+		if (slug && type === 'movie') {
+			return await this.searchMovie(slug);
+		} else if (slug && type === 'tv') {
+			return await this.searchTv(slug);
+		}
+
+		if (type === 'movie') {
+			return await this.discoverMovie(
+				searchParams?.year ? parseInt(searchParams.year) : undefined,
+				searchParams?.genreId,
+				searchParams?.country,
+			);
+		}
+
+		return await this.discoverTV(
+			searchParams?.year ? parseInt(searchParams.year) : undefined,
+			searchParams?.genreId,
+			searchParams?.country,
+		);
 	},
 };
 

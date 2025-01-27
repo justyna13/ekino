@@ -3,6 +3,7 @@ import {
 	ChevronLeftIcon,
 	ChevronRightIcon,
 	MenuIcon,
+	XIcon,
 } from 'lucide-react';
 
 import ArrowDown from '@/components/icons/arrow-down';
@@ -19,4 +20,5 @@ export const Icons = {
 	chevronLeft: ChevronLeftIcon,
 	chevronRight: ChevronRightIcon,
 	arrowDown: ArrowDown,
+	x: XIcon,
 };

@@ -51,9 +51,19 @@ type TCollection = {
 };
 
 // Typ dla gatunku filmu
-type TGenre = {
+export type TGenre = {
 	id: number;
 	name: string;
+};
+
+export type TGenres = {
+	genres: TGenre[];
+};
+
+export type TCountry = {
+	iso_3166_1: string;
+	english_name: string;
+	native_name: string;
 };
 
 // Typ dla firmy produkcyjnej
@@ -234,3 +244,37 @@ export type TTMDBTVShowDetailsWithCredits = TTMDBTVShow & {
 	};
 };
 // end TV series details
+
+export type TSearchTMDBMovieReq = {
+	query: string;
+	include_adults?: boolean;
+	language?: string;
+	primary_release_date?: string;
+	page?: number;
+	region?: string;
+	year?: string;
+};
+
+export type TSearchTMDBTVSeriesReq = {
+	query: string;
+	include_adults?: boolean;
+	language?: string;
+	first_air_date?: string;
+	page?: number;
+	region?: string;
+	year?: string;
+};
+
+export type TDiscoverTMDBMovieReq = {
+	language?: string;
+	primary_release_year?: string;
+	with_genres?: string;
+	with_origin_country?: string;
+};
+
+export type TDiscoverTMDBTVReq = {
+	language?: string;
+	first_air_year?: string;
+	with_genres?: string;
+	with_origin_country?: string;
+};

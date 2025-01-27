@@ -31,7 +31,7 @@ export default function InfoBox() {
 				<div>
 					<small>** Access for 7 days of watching</small>
 				</div>
-				<Link href={'/movies-and-series'} className="block">
+				<Link href={'/search'} className="block">
 					<Button variant="outline" className="bg-transparent">
 						Check out some movies and TV series
 					</Button>
