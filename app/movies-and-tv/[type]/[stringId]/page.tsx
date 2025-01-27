@@ -6,6 +6,7 @@ import { linkToType, typeToLabel } from '@/utils/translations';
 import { TMDBImageOriginalUrl } from '@/config/tmdb-config';
 import Heading from '@/components/ui/heading';
 import Section from '@/components/ui/section';
+import Gallery from '@/components/gallery/gallery';
 import MediaBg from '@/components/media-bg';
 
 type TProps = {
@@ -33,7 +34,7 @@ export default async function MovieDetailsPage({ params }: TProps) {
 	}
 
 	const mediaType = linkToType(type);
-	const labelText = typeToLabel(type);
+	const labelText = typeToLabel(mediaType);
 	const id = parseInt(stringId);
 
 	const [media, mediaImages] = await Promise.all([
@@ -46,7 +47,6 @@ export default async function MovieDetailsPage({ params }: TProps) {
 	]);
 
 	if (!media) notFound();
-
 	return (
 		<article>
 			<section>
@@ -77,6 +77,13 @@ export default async function MovieDetailsPage({ params }: TProps) {
 				</Heading>
 				<div className="text-white">{media.overview}</div>
 			</Section>
+			{mediaImages?.backdrops ? (
+				<Section>
+					<Gallery images={mediaImages.backdrops} />
+				</Section>
+			) : (
+				''
+			)}
 		</article>
 	);
 }

@@ -141,7 +141,7 @@ type TTMDBImage = {
 };
 
 export type TTMDBImages = {
-	backgrops: TTMDBImage[] | [];
+	backdrops: TTMDBImage[] | [];
 	logos: TTMDBImage[] | [];
 	posters: TTMDBImage[] | [];
 	id: number;

@@ -5,6 +5,7 @@ import './globals.css';
 import { Poppins } from 'next/font/google';
 import { cn } from '@/utils/lib/tailwind';
 
+import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function RootLayout({
 			>
 				<Header />
 				<main>{children}</main>
+				<Footer />
 			</body>
 		</html>
 	);

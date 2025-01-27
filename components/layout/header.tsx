@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Breadcrumb from '@/components/layout/breadcrumb';
 import Menu from '@/components/layout/menu';
 
 export default function Header() {
@@ -20,6 +21,7 @@ export default function Header() {
 				</div>
 			</header>
 			<div className="h-[129px] xl:h-[77px]"></div>
+			<Breadcrumb />
 		</>
 	);
 }
