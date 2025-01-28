@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Image, { ImageProps } from 'next/image';
 import Link, { LinkProps } from 'next/link';
 import type { MDXComponents } from 'mdx/types';

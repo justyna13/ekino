@@ -14,7 +14,7 @@ type TProps = {
 	params: Promise<{
 		slug?: string[];
 	}>;
-	searchParams?: TMediaFilterSearchParams;
+	searchParams?: Promise<TMediaFilterSearchParams>;
 };
 
 export async function generateMetadata(

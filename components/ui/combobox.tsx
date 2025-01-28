@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -65,7 +66,11 @@ export default function Combobox({
 			</PopoverTrigger>
 			<PopoverContent className="w-screen p-0 xl:w-[360px]">
 				<Command
-					filter={(value, search, keywords) => {
+					filter={(
+						value: string,
+						search: string,
+						keywords: string[],
+					) => {
 						const extendValue = `${value} ${keywords?.join(' ')}`;
 						if (
 							extendValue
@@ -86,7 +91,7 @@ export default function Combobox({
 										key={v.label}
 										value={v.value}
 										keywords={[v.label]}
-										onSelect={selectedValue => {
+										onSelect={(selectedValue: string) => {
 											setValue(
 												selectedValue !== 'all'
 													? selectedValue

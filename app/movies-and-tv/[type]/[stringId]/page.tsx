@@ -26,6 +26,27 @@ export async function generateMetadata(
 	};
 }
 
+export async function generateStaticParams() {
+	const [topRatedMovies, topRatedTV] = await Promise.all([
+		TmdbService.getTopRatedMovies(),
+		TmdbService.getTopRatedTV(),
+	]);
+
+	if (!topRatedMovies || !topRatedTV) return [];
+
+	const moviesParams = topRatedMovies.map(({ id }) => ({
+		type: 'movies',
+		stringId: String(id),
+	}));
+
+	const tvParams = topRatedTV.map(({ id }) => ({
+		type: 'series',
+		stringId: String(id),
+	}));
+
+	return [...moviesParams, ...tvParams];
+}
+
 export default async function MovieDetailsPage({ params }: TProps) {
 	const { type, stringId } = await params;
 

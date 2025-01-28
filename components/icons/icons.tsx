@@ -2,6 +2,7 @@ import {
 	BookOpenIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
+	LoaderCircleIcon,
 	MenuIcon,
 	XIcon,
 } from 'lucide-react';
@@ -21,4 +22,5 @@ export const Icons = {
 	chevronRight: ChevronRightIcon,
 	arrowDown: ArrowDown,
 	x: XIcon,
+	loaderCircle: LoaderCircleIcon,
 };

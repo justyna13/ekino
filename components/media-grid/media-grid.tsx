@@ -11,7 +11,7 @@ type TProps =
 			mediaList: TTVShowTMDB[];
 	  };
 
-export default function MediaGrid({ mediaType, mediaList }: TProps) {
+export default async function MediaGrid({ mediaType, mediaList }: TProps) {
 	let mediaGridData;
 
 	if (mediaType === 'movie') {
