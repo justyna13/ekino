@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useToast } from '@/utils/hooks/use-toast';
 import { signIn } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
@@ -12,19 +13,34 @@ import FormField from '@/components/form-fields';
 export default function LoginForm() {
 	const searchParams = useSearchParams();
 	const router = useRouter();
+	const { toast } = useToast();
 
 	useEffect(() => {
 		const error = searchParams.get('error');
 
 		if (error) {
-			console.log(error);
+			toast({
+				title:
+					error === 'CredentialsSignIn'
+						? 'Entered wrong credentials'
+						: 'Error, try again later',
+				variant: 'destructive',
+			});
 			router.push('/login');
 		}
-	}, [searchParams, router]);
+	}, [searchParams, router, toast]);
 
 	const handleGoogleSignIn = async () => {
 		await signIn('google', {
-			callbackUrl: '/',
+			redirectTo: '/',
+		});
+	};
+
+	const handleSignIn = async (formData: FormData) => {
+		await signIn('credentials', {
+			email: formData.get('email'),
+			password: formData.get('password'),
+			redirectTo: '/',
 		});
 	};
 
@@ -33,7 +49,7 @@ export default function LoginForm() {
 			<Heading tag="h1" variant="h2" className="text-center">
 				Login
 			</Heading>
-			<form action="" className="space-y-1">
+			<form action={handleSignIn} className="space-y-1">
 				<FormField
 					label="Email"
 					name="email"

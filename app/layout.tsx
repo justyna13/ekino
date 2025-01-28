@@ -7,6 +7,7 @@ import { cn } from '@/utils/lib/tailwind';
 
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import Providers from '@/components/providers/providers';
 
 export const metadata: Metadata = {
 	title: {
@@ -36,9 +37,11 @@ export default function RootLayout({
 					poppins.variable,
 				)}
 			>
-				<Header />
-				<main>{children}</main>
-				<Footer />
+				<Providers>
+					<Header />
+					<main>{children}</main>
+					<Footer />
+				</Providers>
 			</body>
 		</html>
 	);
