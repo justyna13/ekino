@@ -4,10 +4,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
 import { cn } from '@/utils/lib/tailwind';
+import { signOut, useSession } from 'next-auth/react';
 
 import { navConfig } from '@/config/nav-config';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
+import Loader from '@/components/ui/loader';
 import { Icons } from '@/components/icons/icons';
 
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -19,26 +21,56 @@ export default function Menu() {
 	// const router = useRouter();
 	const path = usePathname();
 	const selectedLayoutSegment = useSelectedLayoutSegment();
+	const { status } = useSession();
 
-	const menuItems = navConfig.map(({ icon, label, slug, layoutSegment }) => {
-		const Icon = Icons[icon];
+	const menuItems = navConfig.map(
+		({ icon, label, slug, layoutSegment, type, visibility }) => {
+			if (
+				(visibility === 'guest' && status === 'authenticated') ||
+				(visibility === 'authorized' && status === 'unauthenticated')
+			) {
+				return false;
+			}
 
-		return (
-			<Link
-				key={label}
-				href={slug}
-				className={cn(
-					'flex gap-2 hover:text-primary [&:hover>svg]:fill-primary',
-					slug === path || layoutSegment === selectedLayoutSegment
-						? 'text-primary [&>svg]:fill-primary'
-						: '',
-				)}
-			>
-				<Icon />
-				{label}
-			</Link>
-		);
-	});
+			if (
+				(visibility === 'guest' || visibility === 'authorized') &&
+				status === 'loading'
+			) {
+				return false;
+			}
+
+			const Icon = Icons[icon];
+			let click = undefined;
+
+			if (type === 'logout') {
+				click = async () => {
+					await signOut();
+				};
+			}
+
+			return (
+				<Link
+					key={label}
+					onClick={e => {
+						if (click) {
+							e.preventDefault();
+							click();
+						}
+					}}
+					href={slug}
+					className={cn(
+						'flex gap-2 hover:text-primary [&:hover>svg]:fill-primary',
+						slug === path || layoutSegment === selectedLayoutSegment
+							? 'text-primary [&>svg]:fill-primary'
+							: '',
+					)}
+				>
+					<Icon />
+					{label}
+				</Link>
+			);
+		},
+	);
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -68,7 +100,10 @@ export default function Menu() {
 			{/*	<Button onClick={() => router.back()}>Do tyłu</Button>*/}
 			{/*	<Button onClick={() => router.replace('/')}>Zastąp</Button>*/}
 			{/*</div>*/}
-			<nav className="hidden gap-5 text-white xl:flex">{menuItems}</nav>
+			<nav className="hidden gap-5 text-white xl:flex">
+				{menuItems}
+				{status === 'loading' ? <Loader /> : ''}
+			</nav>
 			<DialogContent className="rounded-lg bg-foreground [&>button>svg]:stroke-white">
 				<DialogHeader className="tex-xl font-medium tracking-wide text-white sm:text-center">
 					Menu główne
@@ -79,6 +114,7 @@ export default function Menu() {
 						onClick={() => setOpen(false)}
 					>
 						{menuItems}
+						{status === 'loading' ? <Loader /> : ''}
 					</nav>
 				</div>
 			</DialogContent>

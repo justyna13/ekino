@@ -2,7 +2,9 @@ import {
 	BookOpenIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
+	KeyIcon,
 	LoaderCircleIcon,
+	LogOutIcon,
 	MenuIcon,
 	XIcon,
 } from 'lucide-react';
@@ -10,6 +12,7 @@ import {
 import ArrowDown from '@/components/icons/arrow-down';
 import Camera from '@/components/icons/camera';
 import Home from '@/components/icons/home';
+import Person from '@/components/icons/person';
 import TriangleDown from '@/components/icons/triangle-down';
 
 export const Icons = {
@@ -23,4 +26,7 @@ export const Icons = {
 	arrowDown: ArrowDown,
 	x: XIcon,
 	loaderCircle: LoaderCircleIcon,
+	key: KeyIcon,
+	logout: LogOutIcon,
+	person: Person,
 };

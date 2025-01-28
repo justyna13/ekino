@@ -21,7 +21,7 @@ export default function LoginForm() {
 		if (error) {
 			toast({
 				title:
-					error === 'CredentialsSignIn'
+					error === 'CredentialsSignin'
 						? 'Entered wrong credentials'
 						: 'Error, try again later',
 				variant: 'destructive',

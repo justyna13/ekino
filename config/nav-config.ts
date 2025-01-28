@@ -5,6 +5,8 @@ type TNavConfig = {
 	slug: string;
 	icon: keyof typeof Icons;
 	layoutSegment?: string;
+	visibility?: 'guest' | 'authorized';
+	type?: 'logout';
 }[];
 
 export const navConfig: TNavConfig = [
@@ -24,5 +26,24 @@ export const navConfig: TNavConfig = [
 		slug: '/blog',
 		icon: 'bookOpen',
 		layoutSegment: 'blog',
+	},
+	{
+		label: 'Login',
+		slug: '/login',
+		icon: 'key',
+		visibility: 'guest',
+	},
+	{
+		label: 'My account',
+		slug: '/my-account',
+		icon: 'person',
+		visibility: 'authorized',
+	},
+	{
+		label: '',
+		slug: '/logout',
+		icon: 'logout',
+		type: 'logout',
+		visibility: 'authorized',
 	},
 ];

@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users', {
 	id: text('id')
@@ -6,6 +6,7 @@ export const usersTable = pgTable('users', {
 		.$defaultFn(() => crypto.randomUUID()),
 	name: text('name'),
 	email: text('email').unique(),
+	password: varchar('password', { length: 255 }),
 	emailVerified: timestamp('emailVerified', { mode: 'date' }),
 	image: text('image'),
 });
