@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { getProfile } from '@/server/actions';
 
 import Section from '@/components/ui/section';
@@ -10,7 +11,7 @@ export const metadata = {
 export default async function MyAccountPage() {
 	const profile = await getProfile();
 	if (!profile.success) {
-		return false;
+		redirect('/');
 	}
 	return (
 		<Section>

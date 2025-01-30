@@ -9,6 +9,7 @@ import { auth as middleware } from '@/server/providers/auth';
 // 	]
 // };
 
+// @ts-ignore
 export default middleware(req => {
 	if (!req.auth && req.nextUrl.pathname.startsWith('/my-account')) {
 		return NextResponse.redirect(new URL('/login', req.url));
