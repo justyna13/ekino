@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound, redirect } from 'next/navigation';
+import { getComments } from '@/server/actions';
 import TmdbService from '@/server/services/tmdb-service';
 import { linkToType, typeToLabel } from '@/utils/translations';
 
@@ -61,13 +62,14 @@ export default async function MovieDetailsPage({ params }: TProps) {
 	const labelText = typeToLabel(mediaType);
 	const id = parseInt(stringId);
 
-	const [media, mediaImages] = await Promise.all([
+	const [media, mediaImages, comments] = await Promise.all([
 		mediaType === 'movie'
 			? TmdbService.getMovieDetails(id)
 			: TmdbService.getTVDetails(id),
 		mediaType === 'movie'
 			? TmdbService.getMovieImages(id)
 			: TmdbService.getTVImages(id),
+		getComments(id, mediaType),
 	]);
 
 	if (!media) notFound();
@@ -120,9 +122,24 @@ export default async function MovieDetailsPage({ params }: TProps) {
 						height={500}
 						className="mx-auto"
 					/>
-					<UserRating variant="large" rating={1} ratingCount={0} />
+					<UserRating
+						variant="large"
+						ratingCount={
+							comments.success ? comments.data.length : 0
+						}
+						rating={
+							comments.success
+								? comments.data.reduce(
+										(acc, curr) => acc + curr.rating,
+										0,
+									) / comments.data.length
+								: 0
+						}
+					/>
 				</div>
-				<Comments comments={''} />
+				<Comments
+					comments={comments.success ? comments.data : undefined}
+				/>
 			</Section>
 		</article>
 	);

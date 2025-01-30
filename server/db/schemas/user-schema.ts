@@ -1,4 +1,6 @@
+import { commentsTable } from '@/server/db/schemas/comment-schema';
 import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm/relations';
 
 export const usersTable = pgTable('users', {
 	id: text('id')
@@ -11,4 +13,9 @@ export const usersTable = pgTable('users', {
 	image: text('image'),
 });
 
+export const usersRelations = relations(usersTable, ({ many }) => ({
+	comments: many(commentsTable),
+}));
+
 export type TUser = typeof usersTable.$inferSelect;
+export type TUserInsert = typeof usersTable.$inferInsert;

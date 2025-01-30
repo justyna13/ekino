@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { TRegistrationValidationErrors } from '@/validators/user-validator';
 import { ZodError } from 'zod';
 
 export class EkinoError extends Error {}
