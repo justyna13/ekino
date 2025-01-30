@@ -1,11 +1,20 @@
+import { getProfile } from '@/server/actions';
+
+import Section from '@/components/ui/section';
+import ProfileForm from '@/components/forms/profile-form';
+
 export const metadata = {
 	title: 'Moje konto',
 };
 
-export default function MyAccountPage() {
+export default async function MyAccountPage() {
+	const profile = await getProfile();
+	if (!profile.success) {
+		return false;
+	}
 	return (
-		<article>
-			<section>Moje konto</section>
-		</article>
+		<Section>
+			<ProfileForm user={profile.data} />
+		</Section>
 	);
 }

@@ -1,17 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { registerUser } from '@/server/actions/user-actions';
 import { useToast } from '@/utils/hooks/use-toast';
+import { TRegistrationValidationErrors } from '@/validators/user-validator';
 import { signIn } from 'next-auth/react';
 
-import { Button } from '@/components/ui/button';
 import Heading from '@/components/ui/heading';
 import SubmitButton from '@/components/ui/submit-button';
 import FormField from '@/components/form-field';
 
-export default function LoginForm() {
+export default function RegistrationForm() {
+	const [formErrors, setFormErrors] =
+		useState<TRegistrationValidationErrors>();
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const { toast } = useToast();
@@ -31,18 +34,26 @@ export default function LoginForm() {
 		}
 	}, [searchParams, router, toast]);
 
-	const handleGoogleSignIn = async () => {
-		await signIn('google', {
-			redirectTo: '/',
-		});
-	};
+	const handleRegistration = async (formData: FormData) => {
+		const res = await registerUser(formData);
 
-	const handleSignIn = async (formData: FormData) => {
-		await signIn('credentials', {
-			email: formData.get('email'),
-			password: formData.get('password'),
-			redirectTo: '/',
+		if (!res.success && res.errors) {
+			setFormErrors(res.errors);
+		} else {
+			setFormErrors({});
+		}
+
+		toast({
+			title: res.message,
+			variant: res.success ? 'success' : 'destructive',
 		});
+
+		if (res.success) {
+			await signIn('credentials', {
+				email: formData.get('email'),
+				password: formData.get('password'),
+			});
+		}
 	};
 
 	return (
@@ -50,11 +61,19 @@ export default function LoginForm() {
 			<Heading tag="h1" variant="h2" className="text-center">
 				Login
 			</Heading>
-			<form action={handleSignIn} className="space-y-1">
+			<form action={handleRegistration} className="space-y-1">
+				<FormField
+					label="User name"
+					name="name"
+					type="text"
+					errors={formErrors?.name}
+					required
+				/>
 				<FormField
 					label="Email"
 					name="email"
 					type="email"
+					errors={formErrors?.email}
 					placeholder="mail@gmail.com"
 					required
 				/>
@@ -62,24 +81,26 @@ export default function LoginForm() {
 					label="Password"
 					name="password"
 					type="password"
+					errors={formErrors?.password}
+					placeholder="*********"
+					required
+				/>
+				<FormField
+					label="Password confirm"
+					name="passwordConfirm"
+					type="password"
+					errors={formErrors?.passwordConfirm}
 					placeholder="*********"
 					required
 				/>
 				<SubmitButton text="Log in" />
 			</form>
 			<div className="mt-4 text-center text-sm text-white">
-				Do not have an account{' '}
-				<Link className="underline" href="/sign-up">
-					Sign up
+				Already have an account?{' '}
+				<Link className="underline" href="/login">
+					Login
 				</Link>
 			</div>
-			<Button
-				variant={'outline'}
-				className="w-full"
-				onClick={handleGoogleSignIn}
-			>
-				Login with Google
-			</Button>
 		</div>
 	);
 }
