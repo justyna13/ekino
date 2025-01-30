@@ -6,6 +6,7 @@ import {
 	LoaderCircleIcon,
 	LogOutIcon,
 	MenuIcon,
+	StarIcon,
 	XIcon,
 } from 'lucide-react';
 
@@ -29,4 +30,5 @@ export const Icons = {
 	key: KeyIcon,
 	logout: LogOutIcon,
 	person: Person,
+	star: StarIcon,
 };

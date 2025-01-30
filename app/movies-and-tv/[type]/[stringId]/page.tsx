@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound, redirect } from 'next/navigation';
 import TmdbService from '@/server/services/tmdb-service';
 import { linkToType, typeToLabel } from '@/utils/translations';
@@ -6,8 +7,10 @@ import { linkToType, typeToLabel } from '@/utils/translations';
 import { TMDBImageOriginalUrl } from '@/config/tmdb-config';
 import Heading from '@/components/ui/heading';
 import Section from '@/components/ui/section';
+import Comments from '@/components/comments/comments';
 import Gallery from '@/components/gallery/gallery';
 import MediaBg from '@/components/media-bg';
+import UserRating from '@/components/user-rating';
 
 type TProps = {
 	params: Promise<{
@@ -105,6 +108,22 @@ export default async function MovieDetailsPage({ params }: TProps) {
 			) : (
 				''
 			)}
+			<Section className="mx-auto max-w-[900px]">
+				<Heading tag="h2" variant="h3" className="mb-4">
+					Watcher&#39;s rating:
+				</Heading>
+				<div className="grid gap-3 sm:grid-cols-2 sm:gap-10">
+					<Image
+						src={'/testimonial-ok.svg'}
+						alt={'testimonials-ok'}
+						width={500}
+						height={500}
+						className="mx-auto"
+					/>
+					<UserRating variant="large" rating={1} ratingCount={0} />
+				</div>
+				<Comments comments={''} />
+			</Section>
 		</article>
 	);
 }
